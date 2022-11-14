@@ -1,0 +1,49 @@
+#admin {
+  text-align: center;
+
+  h1 {
+    font-size: 42px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .admin-navigation {
+    width: 100vw;
+    height: 60px;
+
+    ul {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: inherit;
+      width: inherit;
+      border-block: 2px solid olive;
+
+      li {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        list-style: none;
+        padding-inline: 25px;
+        width: inherit;
+        height: inherit;
+        cursor: pointer;
+
+        &:not(:last-of-type) {
+          border-right: 2px solid olive;
+        }
+      }
+    }
+  }
+
+  main {
+    .profile,
+    .users-list {
+      display: none;
+
+      &.is-active {
+        display: block;
+      }
+    }
+  }
+}

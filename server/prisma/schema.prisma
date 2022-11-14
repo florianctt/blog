@@ -1,0 +1,87 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model category {
+  id        BigInt  @id @default(autoincrement())
+  parentId  BigInt?
+  title     String  @db.VarChar(75)
+  metaTitle String? @db.VarChar(100)
+  slug      String  @db.VarChar(100)
+  content   String? @db.Text
+
+  @@index([parentId], map: "idx_category_parent")
+}
+
+model post {
+  id          BigInt    @id @default(autoincrement())
+  authorId    BigInt
+  parentId    BigInt?
+  title       String    @db.VarChar(75)
+  metaTitle   String?   @db.VarChar(100)
+  slug        String    @unique(map: "uq_slug") @db.VarChar(100)
+  summary     String?   @db.TinyText
+  published   Boolean   @default(false)
+  createdAt   DateTime  @db.DateTime(0)
+  updatedAt   DateTime? @db.DateTime(0)
+  publishedAt DateTime? @db.DateTime(0)
+  content     String?   @db.Text
+
+  @@index([parentId], map: "idx_post_parent")
+  @@index([authorId], map: "idx_post_user")
+}
+
+model post_category {
+  postId     BigInt
+  categoryId BigInt
+
+  @@id([postId, categoryId])
+  @@index([categoryId], map: "idx_pc_category")
+  @@index([postId], map: "idx_pc_post")
+}
+
+model post_comment {
+  id          BigInt    @id @default(autoincrement())
+  postId      BigInt
+  parentId    BigInt?
+  title       String    @db.VarChar(100)
+  published   Boolean   @default(false)
+  createdAt   DateTime  @db.DateTime(0)
+  publishedAt DateTime? @db.DateTime(0)
+  content     String?   @db.Text
+
+  @@index([parentId], map: "idx_comment_parent")
+  @@index([postId], map: "idx_comment_post")
+}
+
+model post_tag {
+  postId BigInt
+  tagId  BigInt
+
+  @@id([postId, tagId])
+  @@index([postId], map: "idx_pt_post")
+  @@index([tagId], map: "idx_pt_tag")
+}
+
+model tag {
+  id        BigInt  @id @default(autoincrement())
+  title     String  @db.VarChar(75)
+  metaTitle String? @db.VarChar(100)
+  slug      String  @db.VarChar(100)
+  content   String? @db.Text
+}
+
+model user {
+  id           Int      @id @default(autoincrement())
+  firstName    String?  @db.VarChar(50)
+  lastName     String?  @db.VarChar(50)
+  mobile       String?  @unique(map: "uq_mobile") @db.VarChar(15)
+  email        String?  @unique(map: "uq_email") @db.VarChar(50)
+  password     String   @db.VarChar(32)
+  registeredAt DateTime @db.DateTime(0)
+}

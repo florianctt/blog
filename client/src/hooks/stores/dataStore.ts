@@ -1,11 +1,24 @@
-import { IDataStore, User } from '@/vite-env'
+import { IDataStore } from '@/vite-env'
 import create from 'zustand'
 
 export const dataStore = create<IDataStore>(set => ({
   dataState: [],
-  setDataState: (data: Partial<User>[]) => set({ dataState: data }),
-  // count: 0,
-  // setCount: (count: number) => set(state => ({ count: state.count + count })),
-  // setDataState: data => set(() => ({ dataState: data })),
-  // updateProfile: { firstName: '', lastName: '', mobile: '', email: '' },
+  setDataState: data => set({ dataState: data }),
+  // updateUser: (value: string, input: string) => {
+  //   switch (input) {
+  //     case 'firstname':
+  //       dataState[0].firstName = value
+  //       return setDataState(dataState)
+  //     case 'lastname':
+  //       dataState[0].lastName = value
+  //       return setDataState(dataState)
+  //     case 'mobile':
+  //       dataState[0].mobile = value
+  //       return setDataState(dataState)
+  //     case 'email':
+  //       dataState[0].email = value
+  //       return setDataState(dataState)
+  //   }
+  //   setDataState(dataState)
+  // }
 }))

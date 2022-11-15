@@ -21,12 +21,7 @@ interface IAdminStore {
 interface IDataStore {
   dataState: Partial<User>[]
   setDataState: (data: Partial<User>[]) => void
+  // updateUser: (value: string, input: string) => any
+  // IDataStore.updateUser: (value: string, input: string) => any
   // updateProfile: Partial<User>
-}
-
-interface IReactStore {
-  rerender: {
-    profile: JSX.Element
-    list: JSX.Element
-  }
 }
